@@ -8,9 +8,27 @@ async function getTodos() {
     response = await fetch('/getlist');
     data = await response.json();
     const todoListUL = document.getElementById('todo-list')
+    todoListUL.innerHTML = '';
     data.forEach(todo => {
-        todoNewLI = document.createElement('li');
+        const todoNewLI = document.createElement('li');
         todoNewLI.textContent = todo.name;
+        if (todo.status === 'closed') {
+            todoNewLI.style.textDecoration = 'line-through';
+        }
+        todoNewLI.addEventListener('click', async () => {
+            response = await fetch(`/gettask/${todo.id}`)
+            data = await response.json();
+            data.status = 'closed';
+            
+            response = await fetch(`/updatetask/${todo.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            getTodos();
+        });
         todoListUL.appendChild(todoNewLI);
     })
 }
@@ -18,11 +36,11 @@ async function getTodos() {
 async function addTodo() {
     const todoInput = document.getElementById('todo-input');
     const newTodo = {
-        ID: parseInt(Math.random().toString(36).substring(7)),
+        id: 69,
         priority: 1,
-        due: Date.now(),
+        due: String(Date.now()),
         status: 'open',
-        name: todoInput.value,
+        name: String(todoInput.value),
     }
 
     response = await fetch('/createtodo', {
@@ -42,5 +60,7 @@ async function addTodo() {
     // console.log(data);
     
     todoInput.value = '';
+    
+    // add the new todo to the list
     getTodos();
 }
