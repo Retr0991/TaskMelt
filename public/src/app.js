@@ -66,9 +66,6 @@ async function addTodo() {
         console.error('I give up');
         return;
     }
-
-    // data = await response.json();
-    // console.log(data);
     
     todoInput.value = '';
     

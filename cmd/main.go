@@ -2,12 +2,13 @@ package main
 
 import (
 	"TaskMeltEnigma/controller"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 
 	r.LoadHTMLGlob("../public/src/*.html")
@@ -19,5 +20,10 @@ func main() {
 	r.GET("/gettask/:id", controller.GetTask)
 	r.PUT("/updatetask/:id", controller.UpdateTask)
 
-	r.Run(":8000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		r.Run()
+	} else {
+		r.Run(":" + port)
+	}
 }
