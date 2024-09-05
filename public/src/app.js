@@ -10,12 +10,20 @@ async function getTodos() {
     const todoListUL = document.getElementById('todo-list')
     todoListUL.innerHTML = '';
     data.forEach(todo => {
-        const todoNewLI = document.createElement('li');
-        todoNewLI.textContent = todo.name;
-        if (todo.status === 'closed') {
-            todoNewLI.style.textDecoration = 'line-through';
+        if (todo.status === 'closed' || todo.name === '') {
+            return;
         }
-        todoNewLI.addEventListener('click', async () => {
+        const todoNewLI = document.createElement('li');
+        todoNewLI.className = 'flex items-center justify-between bg-white/50 backdrop-blur-md rounded-lg p-3';
+
+        const todoSpan = document.createElement('span');
+        todoSpan.className = 'font-heidan';
+        todoSpan.textContent = todo.name;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-100';
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', async () => {
             response = await fetch(`/gettask/${todo.id}`)
             data = await response.json();
             data.status = 'closed';
@@ -29,6 +37,9 @@ async function getTodos() {
             });
             getTodos();
         });
+
+        todoNewLI.appendChild(todoSpan);
+        todoNewLI.appendChild(deleteButton);
         todoListUL.appendChild(todoNewLI);
     })
 }

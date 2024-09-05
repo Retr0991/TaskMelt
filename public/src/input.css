@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'HeidanRounded';
+  src: url('./HeidanRounded.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'AnkhSanctuary';
+  src: url('./AnkhSanctuary.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+

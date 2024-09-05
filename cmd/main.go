@@ -10,7 +10,7 @@ func main() {
 
 	r := gin.Default()
 
-	r.LoadHTMLGlob("../public/*")
+	r.LoadHTMLGlob("../public/src/*.html")
 	r.Static("/assets", "../public")
 
 	r.GET("/", controller.Root)
