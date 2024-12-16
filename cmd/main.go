@@ -11,8 +11,9 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 
-	r.LoadHTMLGlob("../public/src/*.html")
-	r.Static("/assets", "../public")
+	r.LoadHTMLGlob("../frontend/dist/*.html")
+	r.Static("/assets", "../frontend/dist/assets/")
+	r.StaticFile("/vite.svg", "../frontend/dist/vite.svg")
 
 	r.GET("/", controller.Root)
 	r.GET("/getlist", controller.GetTodos)
