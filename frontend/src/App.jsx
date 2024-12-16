@@ -3,7 +3,7 @@ import './App.css'
 import { Todo } from './components/Todo'
 
 function App() {
-  const [todos, setTodos] = useState()
+  const [todos, setTodos] = useState([])
 
   const [newTodo, setNewTodo] = useState('')
 
